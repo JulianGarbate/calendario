@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // conexión con pooler (la usa la app)
+  directUrl = env("DATABASE_URL_UNPOOLED") // conexión directa (la usan las migraciones)
+}
+
+model RecurringRule {
+  id         String  @id @default(cuid())
+  title      String
+  emoji      String  @default("Pin")
+  daysOfWeek String  @default("") // CSV 0=domingo..6=sábado
+  active     Boolean @default(true)
+}
+
+model HabitTemplate {
+  id      String       @id @default(cuid())
+  name    String
+  active  Boolean      @default(true)
+  entries HabitEntry[]
+}
+
+model DayLog {
+  id      String       @id @default(cuid())
+  date    String       @unique // "YYYY-MM-DD", evita problemas de timezone
+  entries HabitEntry[]
+}
+
+model HabitEntry {
+  id              String        @id @default(cuid())
+  dayLogId        String
+  dayLog          DayLog        @relation(fields: [dayLogId], references: [id], onDelete: Cascade)
+  habitTemplateId String
+  habitTemplate   HabitTemplate @relation(fields: [habitTemplateId], references: [id], onDelete: Cascade)
+  completed       Boolean       @default(false)
+
+  @@unique([dayLogId, habitTemplateId])
+}
+
+model MetricTemplate {
+  id      String        @id @default(cuid())
+  name    String
+  unit    String
+  active  Boolean       @default(true)
+  entries MetricEntry[]
+}
+
+model MetricEntry {
+  id               String         @id @default(cuid())
+  metricTemplateId String
+  metricTemplate   MetricTemplate @relation(fields: [metricTemplateId], references: [id], onDelete: Cascade)
+  date             String // "YYYY-MM-DD"
+  value            Float
+  createdAt        DateTime       @default(now())
+
+  @@index([metricTemplateId, date])
+}
+
+model CalendarSource {
+  id           String    @id @default(cuid())
+  name         String
+  color        String    @default("#0071e3")
+  kind         String    @default("manual") // "manual" | "subscription"
+  url          String? // solo suscripciones; nunca se devuelve al navegador
+  visible      Boolean   @default(true)
+  lastSyncedAt DateTime?
+  lastError    String?
+  events       Event[]
+}
+
+model Event {
+  id        String         @id @default(cuid())
+  sourceId  String
+  source    CalendarSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  title     String
+  date      String // "YYYY-MM-DD" inicio
+  endDate   String // "YYYY-MM-DD" fin inclusivo (= date si dura un día)
+  allDay    Boolean        @default(false)
+  startTime String? // "HH:MM"
+  endTime   String?
+  location  String?
+  notes     String?
+  uid       String?
+
+  @@index([date, endDate])
+}
+
+/// Límite de intentos de login por IP (en la base porque en serverless la memoria no se comparte).
+model LoginThrottle {
+  ip    String   @id
+  count Int      @default(0)
+  until DateTime
+}
