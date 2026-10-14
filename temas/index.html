@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Temas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#1565C0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none; -webkit-user-select: none;
+    background: #1565C0; color: #fff;
+    transition: background-color .3s ease, color .3s ease;
+  }
+  #app {
+    height: 100%; box-sizing: border-box; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: max(32px, env(safe-area-inset-top)) 28px max(32px, env(safe-area-inset-bottom));
+  }
+  #frase {
+    margin: 0; max-width: 18em; text-align: center;
+    font-weight: 700; line-height: 1.25; text-wrap: balance;
+    font-size: clamp(1.7rem, 7vw, 3rem);
+  }
+  #frase.sale { animation: entra .25s ease; }
+  @keyframes entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  #contador {
+    position: fixed; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom));
+    text-align: center; font-size: .8rem; opacity: .6; pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) { body, #frase.sale { transition: none; animation: none; } }
+</style>
+</head>
+<body>
+<main id="app" role="button" tabindex="0" aria-live="polite" aria-label="Tocá la pantalla para ver otra pregunta">
+  <p id="frase"></p>
+</main>
+<div id="contador"></div>
+<script src="preguntas.js"></script>
+<script>
+// Fondos simples. El texto se elige solo (blanco o negro) según el mayor contraste.
+const COLORES = [
+  "#D32F2F", // rojo
+  "#1565C0", // azul
+  "#F48FB1", // rosa
+  "#2E7D32", // verde
+  "#FDD835", // amarillo
+  "#FB8C00", // naranja
+  "#6A1B9A", // violeta
+  "#4FC3F7", // celeste
+  "#00695C", // turquesa
+  "#E91E63", // fucsia
+  "#8D6E63", // marrón
+  "#212121"  // negro
+];
+
+function luminancia(hex) {
+  const c = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map(v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+}
+function colorTexto(bg) {
+  const L = luminancia(bg);
+  const conBlanco = 1.05 / (L + 0.05);
+  const conNegro = (L + 0.05) / 0.05;
+  return conBlanco >= conNegro ? "#FFFFFF" : "#000000";
+}
+
+function mezclar(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const frase = document.getElementById("frase");
+const contador = document.getElementById("contador");
+let cola = [], vistas = 0, colorActual = null;
+
+function siguiente() {
+  if (!cola.length) { cola = mezclar(PREGUNTAS.map((_, i) => i)); vistas = 0; }
+  const i = cola.pop();
+  vistas++;
+
+  let bg;
+  do { bg = COLORES[Math.floor(Math.random() * COLORES.length)]; } while (bg === colorActual);
+  colorActual = bg;
+  const fg = colorTexto(bg);
+
+  document.body.style.backgroundColor = bg;
+  document.body.style.color = fg;
+  document.querySelector('meta[name="theme-color"]').content = bg;
+  frase.textContent = PREGUNTAS[i];
+  contador.textContent = vistas + " / " + PREGUNTAS.length;
+  frase.classList.remove("sale"); void frase.offsetWidth; frase.classList.add("sale");
+}
+
+document.getElementById("app").addEventListener("click", siguiente);
+document.addEventListener("keydown", e => {
+  if (e.key === " " || e.key === "Enter" || e.key === "ArrowRight") { e.preventDefault(); siguiente(); }
+});
+siguiente();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+</script>
+</body>
+</html>
