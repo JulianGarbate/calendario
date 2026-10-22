@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mi semana</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Semana">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<style>
+  :root { --bg:#0f172a; --card:#1e293b; --linea:#334155; --txt:#f1f5f9; --sub:#94a3b8; --acento:#38bdf8; --libre:#22c55e; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--txt); }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%;
+    overscroll-behavior: none;
+  }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+  #app { min-height:100%; padding: max(14px, env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom)); }
+  header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  h1 { font-size:26px; margin:0; letter-spacing:-.5px; }
+  .sub { color:var(--sub); font-size:13px; margin-top:2px; }
+  .ico { width:40px; height:40px; border-radius:20px; background:var(--card); font-size:20px; }
+
+  /* Resumen semanal */
+  .semana { background:var(--card); border-radius:18px; padding:10px 8px 10px 4px; display:flex; }
+  .horas { width:26px; position:relative; flex:none; margin-top:34px; height:var(--alto); }
+  .horas span { position:absolute; right:4px; font-size:9px; color:var(--sub); transform:translateY(-50%); }
+  .dias { flex:1; display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+  .dia { display:flex; flex-direction:column; align-items:stretch; }
+  .dia .cab { height:30px; margin-bottom:4px; border-radius:10px; text-align:center; font-size:10px; line-height:1.15; color:var(--sub); padding-top:3px; }
+  .dia .cab b { display:block; font-size:14px; color:var(--txt); }
+  .dia.hoy .cab { color:var(--acento); }
+  .dia.sel .cab { background:var(--acento); color:#0f172a; }
+  .dia.sel .cab b { color:#0f172a; }
+  .col { position:relative; height:var(--alto); border-radius:8px; background:
+      repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--hora) - 1px), rgba(148,163,184,.14) calc(var(--hora) - 1px), rgba(148,163,184,.14) var(--hora)),
+      rgba(34,197,94,.10); overflow:hidden; }
+  .dia.sel .col { outline:2px solid var(--acento); outline-offset:-1px; }
+  .blq { position:absolute; border-radius:5px; font-size:10px; display:flex; align-items:flex-start; justify-content:center; overflow:hidden; padding-top:1px; color:#0f172a; }
+  .ahora { position:absolute; left:0; right:0; height:2px; background:#f43f5e; z-index:2; }
+  .leyenda { display:flex; flex-wrap:wrap; gap:6px 12px; margin:12px 2px 0; font-size:12px; color:var(--sub); }
+  .leyenda i { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:-1px; }
+
+  /* Detalle del día */
+  .dettit { display:flex; align-items:baseline; justify-content:space-between; margin:22px 2px 10px; }
+  .dettit h2 { margin:0; font-size:20px; }
+  .libre-tot { font-size:13px; color:var(--libre); font-weight:600; }
+  .fila { display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:var(--card); border-radius:14px; padding:12px 14px; margin-bottom:8px; border-left:6px solid var(--c); }
+  .fila .em { font-size:24px; }
+  .fila .t { font-weight:600; }
+  .fila .h { color:var(--sub); font-size:13px; margin-top:2px; }
+  .fila .rep { margin-left:auto; color:var(--sub); font-size:11px; text-align:right; }
+  .hueco { display:flex; align-items:center; gap:8px; padding:7px 14px; margin-bottom:8px; border-radius:12px; border:1.5px dashed rgba(34,197,94,.5); color:var(--libre); font-size:13px; }
+  .vacio { color:var(--sub); text-align:center; padding:18px 0; font-size:14px; }
+
+  .fab { position:fixed; right:20px; bottom:calc(20px + env(safe-area-inset-bottom)); width:60px; height:60px; border-radius:30px; background:var(--acento); color:#0f172a; font-size:34px; line-height:1; box-shadow:0 6px 20px rgba(0,0,0,.45); }
+
+  /* Hojas modales */
+  .vel { position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; z-index:10; }
+  .vel.on { display:block; }
+  .hoja { position:absolute; left:0; right:0; bottom:0; max-height:92%; overflow-y:auto; background:var(--card); border-radius:22px 22px 0 0; padding:18px 16px calc(24px + env(safe-area-inset-bottom)); }
+  .hoja h3 { margin:0 0 14px; font-size:20px; }
+  label { display:block; font-size:12px; color:var(--sub); margin:14px 0 6px; text-transform:uppercase; letter-spacing:.5px; }
+  input[type=text], input[type=time] { width:100%; font:inherit; font-size:17px; color:var(--txt); background:var(--bg); border:1.5px solid var(--linea); border-radius:12px; padding:11px 12px; -webkit-appearance:none; appearance:none; min-height:46px; }
+  .par { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { padding:9px 13px; border-radius:20px; background:var(--bg); border:1.5px solid var(--linea); font-size:15px; }
+  .chip.on { border-color:var(--c, var(--acento)); background:color-mix(in srgb, var(--c, var(--acento)) 25%, var(--bg)); }
+  .dchips { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .dchips .chip { padding:10px 0; text-align:center; border-radius:12px; font-weight:600; }
+  .acciones { display:flex; gap:10px; margin-top:22px; }
+  .btn { flex:1; padding:14px; border-radius:14px; font-weight:700; background:var(--bg); }
+  .btn.pri { background:var(--acento); color:#0f172a; }
+  .btn.peli { color:#f87171; }
+  .colores { display:flex; gap:8px; flex-wrap:wrap; }
+  .colores button { width:34px; height:34px; border-radius:17px; background:var(--c); border:3px solid transparent; }
+  .colores button.on { border-color:#fff; }
+  .catfila { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--linea); }
+  .catfila .pt { width:14px; height:14px; border-radius:7px; background:var(--c); flex:none; }
+  .catfila span.n { flex:1; }
+  .mini { padding:6px 10px; border-radius:10px; background:var(--bg); font-size:13px; }
+  .emojis { display:flex; flex-wrap:wrap; gap:6px; }
+  .emojis button { font-size:22px; width:42px; height:42px; border-radius:10px; background:var(--bg); border:1.5px solid transparent; }
+  .emojis button.on { border-color:var(--acento); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<button class="fab" id="fab" aria-label="Nuevo evento">+</button>
+<div class="vel" id="vel"><div class="hoja" id="hoja"></div></div>
+<script src="app.js"></script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+</script>
+</body>
+</html>
