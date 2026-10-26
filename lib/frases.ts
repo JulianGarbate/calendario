@@ -91,4 +91,10 @@ export const FRASES: Frase[] = [
   { id: 88, texto: "El amor no mira con los ojos, sino con el alma.", autor: "William Shakespeare" },
   { id: 89, texto: "El amor es el puente entre tú y todo.", autor: "Rumi" },
   { id: 90, texto: "La familia no es algo importante, es todo.", autor: "Michael J. Fox" },
+  { id: 91, texto: "El talento sin trabajo no es nada.", autor: "Cristiano Ronaldo" },
+  { id: 92, texto: "Tienes que luchar para alcanzar tus sueños. Tienes que sacrificarte y trabajar duro por ellos.", autor: "Lionel Messi" },
+  { id: 93, texto: "Me equivoqué y pagué, pero la pelota no se mancha.", autor: "Diego Maradona" },
+  { id: 94, texto: "Jugar al fútbol es muy simple, pero jugar un fútbol simple es lo más difícil que hay.", autor: "Johan Cruyff" },
+  { id: 95, texto: "Cada desventaja tiene su ventaja.", autor: "Johan Cruyff" },
+  { id: 96, texto: "Un león no se preocupa por la opinión de las ovejas.", autor: "Zlatan Ibrahimović" },
 ];
