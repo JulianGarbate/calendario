@@ -74,4 +74,12 @@ export const FRASES: Frase[] = [
   { id: 71, texto: "Conócete a ti mismo.", autor: "Sócrates" },
   { id: 72, texto: "Prepárate, y algún día tu oportunidad llegará.", autor: "Abraham Lincoln" },
   { id: 73, texto: "El secreto de la existencia no solo consiste en vivir, sino en saber para qué se vive.", autor: "Fiódor Dostoyevski" },
+  { id: 74, texto: "El corazón tiene razones que la razón no conoce.", autor: "Blaise Pascal" },
+  { id: 75, texto: "Cuando el amor te llame, síguelo.", autor: "Khalil Gibran" },
+  { id: 76, texto: "El amor que mueve el sol y las demás estrellas.", autor: "Dante Alighieri" },
+  { id: 77, texto: "Es mejor haber amado y perdido que nunca haber amado.", autor: "Alfred Tennyson" },
+  { id: 78, texto: "Amarse a uno mismo es el comienzo de un romance eterno.", autor: "Oscar Wilde" },
+  { id: 79, texto: "Ser profundamente amado por alguien te da fuerza; amar profundamente a alguien te da valor.", autor: "Lao Tsé" },
+  { id: 80, texto: "Donde hay amor, hay vida.", autor: "Mahatma Gandhi" },
+  { id: 81, texto: "El amor comienza al cuidar de los más cercanos: los de casa.", autor: "Madre Teresa" },
 ];
