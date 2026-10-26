@@ -90,4 +90,5 @@ export const FRASES: Frase[] = [
   { id: 87, texto: "Solo se ve bien con el corazón.", autor: "Antoine de Saint-Exupéry" },
   { id: 88, texto: "El amor no mira con los ojos, sino con el alma.", autor: "William Shakespeare" },
   { id: 89, texto: "El amor es el puente entre tú y todo.", autor: "Rumi" },
+  { id: 90, texto: "La familia no es algo importante, es todo.", autor: "Michael J. Fox" },
 ];
