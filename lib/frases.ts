@@ -97,4 +97,5 @@ export const FRASES: Frase[] = [
   { id: 94, texto: "Jugar al fútbol es muy simple, pero jugar un fútbol simple es lo más difícil que hay.", autor: "Johan Cruyff" },
   { id: 95, texto: "Cada desventaja tiene su ventaja.", autor: "Johan Cruyff" },
   { id: 96, texto: "Un león no se preocupa por la opinión de las ovejas.", autor: "Zlatan Ibrahimović" },
+  { id: 97, texto: "Solo falla un penal quien se atreve a patearlo.", autor: "Roberto Baggio" },
 ];
