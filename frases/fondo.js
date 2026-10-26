@@ -1,23 +1,16 @@
 // Dibuja el fondo de pantalla (PNG para iPhone 13) con una frase y su autor
-const fs = require("node:fs");
-const path = require("node:path");
 const ANCHO = 1170;
 const ALTO = 2532;
 const COL = 950; // ancho útil del texto
 const ALTO_TEXTO = 640; // alto máximo para la frase (el resto es la línea y el autor)
 
-// Las fuentes se buscan junto al archivo y, si el despliegue lo movió, desde la raíz del proceso
-const leerFuente = (archivo) => {
-  for (const base of [__dirname, process.cwd()]) {
-    const ruta = path.join(base, "fonts", archivo);
-    if (fs.existsSync(ruta)) return fs.readFileSync(ruta);
-  }
-  throw new Error(`No se encontró la fuente ${archivo}`);
+const fuentes = () => {
+  const dejavu = require("./fonts/dejavu");
+  return [
+    { name: "Serif", data: dejavu.serif, weight: 400 },
+    { name: "Sans", data: dejavu.sans, weight: 400 },
+  ];
 };
-const fuentes = () => [
-  { name: "Serif", data: leerFuente("DejaVuSerif.ttf"), weight: 400 },
-  { name: "Sans", data: leerFuente("DejaVuSans.ttf"), weight: 400 },
-];
 
 // Satori no mide el texto como un navegador: simulo el corte de líneas con un ancho
 // medio por letra (conservador para DejaVu Serif) y uso el tamaño más grande que entre.

@@ -22,5 +22,5 @@ Las frases están en `frases.json`; para agregar una, añade un objeto con un `i
 
 ## Fondo de pantalla para iPhone
 
-`/frases/fondo` dibuja la frase y su autor sobre un fondo oscuro (satori + resvg, fuentes DejaVu en `fonts/`).
+`/frases/fondo` dibuja la frase y su autor sobre un fondo oscuro (satori + resvg, fuentes DejaVu embebidas en `fonts/dejavu.js`).
 El atajo de iPhone hace dos pasos: *Obtener contenido de URL* con esa ruta y *Establecer fondo de pantalla*.
