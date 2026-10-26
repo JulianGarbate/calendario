@@ -42,5 +42,22 @@
   {"id": 41, "texto": "El hierro que no se usa se oxida.", "autor": "Leonardo da Vinci"},
   {"id": 42, "texto": "Las dificultades fortalecen la mente, como el trabajo lo hace con el cuerpo.", "autor": "Séneca"},
   {"id": 43, "texto": "Voy despacio, pero nunca doy un paso atrás.", "autor": "Abraham Lincoln"},
-  {"id": 44, "texto": "La vida es como andar en bicicleta: para mantener el equilibrio, debes seguir moviéndote.", "autor": "Albert Einstein"}
+  {"id": 44, "texto": "La vida es como andar en bicicleta: para mantener el equilibrio, debes seguir moviéndote.", "autor": "Albert Einstein"},
+  {"id": 45, "texto": "Quien conoce a los demás es sabio; quien se conoce a sí mismo es iluminado.", "autor": "Lao Tsé"},
+  {"id": 46, "texto": "Sufrimos más en la imaginación que en la realidad.", "autor": "Séneca"},
+  {"id": 47, "texto": "No hay camino fácil de la tierra a las estrellas.", "autor": "Séneca"},
+  {"id": 48, "texto": "La felicidad de tu vida depende de la calidad de tus pensamientos.", "autor": "Marco Aurelio"},
+  {"id": 49, "texto": "Aprovecha el día.", "autor": "Horacio"},
+  {"id": 50, "texto": "Nada es permanente excepto el cambio.", "autor": "Heráclito"},
+  {"id": 51, "texto": "Mil velas pueden encenderse con una sola vela, y la vida de la vela no se acortará.", "autor": "Buda"},
+  {"id": 52, "texto": "Si oyes una voz dentro de ti que dice «no puedes pintar», entonces pinta, y esa voz será silenciada.", "autor": "Vincent van Gogh"},
+  {"id": 53, "texto": "Cada pared es una puerta.", "autor": "Ralph Waldo Emerson"},
+  {"id": 54, "texto": "La experiencia es el nombre que damos a nuestros errores.", "autor": "Oscar Wilde"},
+  {"id": 55, "texto": "No basta con saber, se debe también aplicar; no es suficiente querer, se debe también hacer.", "autor": "Goethe"},
+  {"id": 56, "texto": "Donde una puerta se cierra, otra se abre.", "autor": "Cervantes"},
+  {"id": 57, "texto": "Puedo aceptar el fracaso, todo el mundo falla en algo. Pero no puedo aceptar no intentarlo.", "autor": "Michael Jordan"},
+  {"id": 58, "texto": "El único hombre que nunca comete errores es el que nunca hace nada.", "autor": "Theodore Roosevelt"},
+  {"id": 59, "texto": "Haz de cada día tu obra maestra.", "autor": "John Wooden"},
+  {"id": 60, "texto": "El coraje es resistencia al miedo, dominio del miedo; no ausencia de miedo.", "autor": "Mark Twain"},
+  {"id": 61, "texto": "La suerte favorece a la mente preparada.", "autor": "Louis Pasteur"}
 ]
