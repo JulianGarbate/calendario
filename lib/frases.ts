@@ -100,4 +100,5 @@ export const FRASES: Frase[] = [
   { id: 97, texto: "Solo falla un penal quien se atreve a patearlo.", autor: "Roberto Baggio" },
   { id: 98, texto: "Cuanto más difícil es la victoria, mayor es la felicidad al ganar.", autor: "Pelé" },
   { id: 99, texto: "A veces viene bien perder para saber lo difícil que es ganar y lo bonito que es.", autor: "Luis Enrique" },
+  { id: 100, texto: "Si nos van a eliminar, que sea jugando al fútbol.", autor: "Luis Enrique" },
 ];
