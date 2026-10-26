@@ -62,4 +62,5 @@ export const FRASES: Frase[] = [
   { id: 59, texto: "Haz de cada día tu obra maestra.", autor: "John Wooden" },
   { id: 60, texto: "El coraje es resistencia al miedo, dominio del miedo; no ausencia de miedo.", autor: "Mark Twain" },
   { id: 61, texto: "La suerte favorece a la mente preparada.", autor: "Louis Pasteur" },
+  { id: 62, texto: "Si no lo intentas, ya fallaste.", autor: "Julian Garbate" },
 ];
