@@ -1,4 +1,4 @@
-// Servidor de frases motivadoras (JSON y fondos de pantalla PNG): node server.js
+// Servidor local de frases (JSON y fondos PNG): node local.js. En Vercel se usan las funciones de api/
 const http = require("node:http");
 const { todas, azar, hoy, porId, elegir, enviar, enviarPng, soloGet } = require("./rutas");
 const { fondo } = require("./fondo");
