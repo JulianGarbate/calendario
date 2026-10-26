@@ -98,4 +98,5 @@ export const FRASES: Frase[] = [
   { id: 95, texto: "Cada desventaja tiene su ventaja.", autor: "Johan Cruyff" },
   { id: 96, texto: "Un león no se preocupa por la opinión de las ovejas.", autor: "Zlatan Ibrahimović" },
   { id: 97, texto: "Solo falla un penal quien se atreve a patearlo.", autor: "Roberto Baggio" },
+  { id: 98, texto: "Cuanto más difícil es la victoria, mayor es la felicidad al ganar.", autor: "Pelé" },
 ];
