@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/frases", "destination": "/api/frases" },
+    { "source": "/frases/:id", "destination": "/api/frases/:id" }
+  ]
+}
