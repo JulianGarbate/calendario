@@ -5,7 +5,7 @@ Servidor independiente de frases (JSON y fondos de pantalla PNG), sin login. Tod
 ```
 cd frases
 npm install
-node local.js            # puerto 3000, o PORT=8080 node local.js
+node server.js            # puerto 3000, o PORT=8080 node server.js
 ```
 
 | Ruta | Devuelve |

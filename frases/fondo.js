@@ -1,17 +1,22 @@
 // Dibuja el fondo de pantalla (PNG para iPhone 13) con una frase y su autor
 const fs = require("node:fs");
 const path = require("node:path");
-const satori = require("satori").default || require("satori");
-const { Resvg } = require("@resvg/resvg-js");
-
 const ANCHO = 1170;
 const ALTO = 2532;
 const COL = 950; // ancho útil del texto
 const ALTO_TEXTO = 640; // alto máximo para la frase (el resto es la línea y el autor)
 
-const fuentes = [
-  { name: "Serif", data: fs.readFileSync(path.join(__dirname, "fonts/DejaVuSerif.ttf")), weight: 400 },
-  { name: "Sans", data: fs.readFileSync(path.join(__dirname, "fonts/DejaVuSans.ttf")), weight: 400 },
+// Las fuentes se buscan junto al archivo y, si el despliegue lo movió, desde la raíz del proceso
+const leerFuente = (archivo) => {
+  for (const base of [__dirname, process.cwd()]) {
+    const ruta = path.join(base, "fonts", archivo);
+    if (fs.existsSync(ruta)) return fs.readFileSync(ruta);
+  }
+  throw new Error(`No se encontró la fuente ${archivo}`);
+};
+const fuentes = () => [
+  { name: "Serif", data: leerFuente("DejaVuSerif.ttf"), weight: 400 },
+  { name: "Sans", data: leerFuente("DejaVuSans.ttf"), weight: 400 },
 ];
 
 // Satori no mide el texto como un navegador: simulo el corte de líneas con un ancho
@@ -73,7 +78,9 @@ const diseno = ({ texto, autor }) =>
 
 // Devuelve un Buffer con el PNG
 const fondo = async (frase) => {
-  const svg = await satori(diseno(frase), { width: ANCHO, height: ALTO, fonts: fuentes });
+  const satori = require("satori").default || require("satori");
+  const { Resvg } = require("@resvg/resvg-js");
+  const svg = await satori(diseno(frase), { width: ANCHO, height: ALTO, fonts: fuentes() });
   return new Resvg(svg).render().asPng();
 };
 
