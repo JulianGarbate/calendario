@@ -15,10 +15,26 @@ const enviar = (res, status, body) => {
   res.end(JSON.stringify(body));
 };
 
+// Elige la frase para el fondo: ?id=N, ?hoy=1 o, sin parámetros, una al azar
+const elegir = ({ id, hoy: esHoy } = {}) => {
+  if (id !== undefined) return /^\d+$/.test(id) ? porId(id) : undefined;
+  return esHoy === "1" || esHoy === "true" ? hoy() : azar();
+};
+
+// Responde con una imagen PNG; no-store para que cada pedido traiga una frase nueva
+const enviarPng = (res, png) => {
+  res.writeHead(200, {
+    "Content-Type": "image/png",
+    "Cache-Control": "no-store",
+    "Access-Control-Allow-Origin": "*",
+  });
+  res.end(png);
+};
+
 const soloGet = (req, res) => {
   if (req.method === "GET") return true;
   enviar(res, 405, { error: "Método no permitido" });
   return false;
 };
 
-module.exports = { todas, azar, hoy, porId, enviar, soloGet };
+module.exports = { todas, azar, hoy, porId, elegir, enviar, enviarPng, soloGet };

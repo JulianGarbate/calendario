@@ -1,16 +1,21 @@
-// Servidor JSON de frases motivadoras. Sin dependencias: node server.js
+// Servidor de frases motivadoras (JSON y fondos de pantalla PNG): node server.js
 const http = require("node:http");
-const { todas, azar, hoy, porId, enviar, soloGet } = require("./rutas");
+const { todas, azar, hoy, porId, elegir, enviar, enviarPng, soloGet } = require("./rutas");
+const { fondo } = require("./fondo");
 
 const PORT = process.env.PORT || 3000;
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   if (!soloGet(req, res)) return;
-  const { pathname } = new URL(req.url, "http://localhost");
+  const { pathname, searchParams } = new URL(req.url, "http://localhost");
 
   if (pathname === "/frases") return enviar(res, 200, todas());
   if (pathname === "/frases/random") return enviar(res, 200, azar());
   if (pathname === "/frases/hoy") return enviar(res, 200, hoy());
+  if (pathname === "/frases/fondo") {
+    const frase = elegir(Object.fromEntries(searchParams));
+    return frase ? enviarPng(res, await fondo(frase)) : enviar(res, 404, { error: "Frase no encontrada" });
+  }
   const m = pathname.match(/^\/frases\/(\d+)$/);
   if (m) {
     const f = porId(m[1]);
