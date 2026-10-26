@@ -3,6 +3,8 @@ import { SESSION_COOKIE, verifySession } from "@/lib/session";
 
 // /api/cron/sync se protege solo con CRON_SECRET (no tiene cookie de sesión)
 const PUBLIC = ["/login", "/api/auth/login", "/api/cron/sync"];
+// Frases motivadoras: rutas públicas de solo lectura
+const isPublic = (p: string) => PUBLIC.includes(p) || p === "/api/frases" || p.startsWith("/api/frases/");
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -16,7 +18,7 @@ export async function proxy(req: NextRequest) {
     }
   }
 
-  if (PUBLIC.includes(pathname)) return NextResponse.next();
+  if (isPublic(pathname)) return NextResponse.next();
   if (await verifySession(req.cookies.get(SESSION_COOKIE)?.value)) return NextResponse.next();
 
   if (isApi) return NextResponse.json({ error: "No autenticado" }, { status: 401 });
