@@ -1,6 +1,6 @@
 // Servidor de frases motivadoras (JSON y fondos de pantalla PNG): node server.js
 const http = require("node:http");
-const { todas, azar, hoy, porId, elegir, enviar, enviarPng, soloGet } = require("./rutas");
+const { todas, azar, hoy, porId, elegir, siguiente, enviar, enviarPng, soloGet } = require("./rutas");
 const { fondo } = require("./fondo");
 
 const PORT = process.env.PORT || 3000;
@@ -11,12 +11,20 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname === "/")
     return enviar(res, 200, {
-      rutas: ["/frases", "/frases/random", "/frases/hoy", "/frases/:id", "/frases/fondo", "/frases/:id/fondo", "/frases/fondo?n=N"],
+      rutas: ["/frases", "/frases/random", "/frases/hoy", "/frases/:id", "/frases/fondo", "/frases/:id/fondo", "/frases/fondo?n=N", "/frases/fondo/siguiente"],
       commit: (process.env.VERCEL_GIT_COMMIT_SHA || "local").slice(0, 7),
     });
   if (pathname === "/frases") return enviar(res, 200, todas());
   if (pathname === "/frases/random") return enviar(res, 200, azar());
   if (pathname === "/frases/hoy") return enviar(res, 200, hoy());
+  // Fondo con la frase que sigue en la secuencia; el número se guarda en Redis
+  if (pathname === "/frases/fondo/siguiente") {
+    try {
+      return enviarPng(res, await fondo(await siguiente()));
+    } catch (e) {
+      return enviar(res, 503, { error: "No se pudo avanzar la secuencia", detalle: e.message });
+    }
+  }
   // Fondo: /frases/fondo (al azar), /frases/fondo?id=N, /frases/fondo/N o /frases/N/fondo
   const f = pathname.match(/^\/frases\/(?:fondo|(\d+)\/fondo)(?:\/(\d+))?$/);
   if (f) {

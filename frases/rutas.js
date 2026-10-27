@@ -34,6 +34,17 @@ const mezclado = (() => {
 })();
 const enPosicion = (n) => (/^[1-9]\d*$/.test(n) ? mezclado[(Number(n) - 1) % mezclado.length] : undefined);
 
+// Contador guardado en Redis (Upstash, desde Vercel > Storage). INCR es atómico: cada pedido avanza una frase.
+const siguiente = async () => {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) throw new Error("Falta conectar Redis (variables KV_REST_API_URL y KV_REST_API_TOKEN)");
+  const r = await fetch(`${url}/incr/frases:contador`, { headers: { Authorization: `Bearer ${token}` } });
+  if (!r.ok) throw new Error(`Redis respondió ${r.status}`);
+  const { result } = await r.json();
+  return enPosicion(String(result));
+};
+
 // Elige la frase para el fondo: ?id=N, ?n=N (secuencia), ?hoy=1 o, sin parámetros, una al azar
 const elegir = ({ id, n, hoy: esHoy } = {}) => {
   if (id !== undefined) return /^\d+$/.test(id) ? porId(id) : undefined;
@@ -57,4 +68,4 @@ const soloGet = (req, res) => {
   return false;
 };
 
-module.exports = { todas, azar, hoy, porId, elegir, enviar, enviarPng, soloGet };
+module.exports = { todas, azar, hoy, porId, elegir, siguiente, enviar, enviarPng, soloGet };
