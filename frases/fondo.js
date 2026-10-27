@@ -3,7 +3,7 @@ const ANCHO = 1170;
 const ALTO = 2532;
 const COL = 950; // ancho útil del texto
 const ALTO_TEXTO = 560; // alto máximo para la frase (el resto es la línea y el autor)
-const BASE = 1300; // y donde termina el bloque: arriba de las notificaciones y bajo el reloj
+const BASE = 1450; // y donde termina el bloque: arriba de las notificaciones y bajo el reloj
 
 const fuentes = () => {
   const dejavu = require("./fonts/dejavu");
