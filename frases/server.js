@@ -11,14 +11,17 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname === "/")
     return enviar(res, 200, {
-      rutas: ["/frases", "/frases/random", "/frases/hoy", "/frases/:id", "/frases/fondo"],
+      rutas: ["/frases", "/frases/random", "/frases/hoy", "/frases/:id", "/frases/fondo", "/frases/:id/fondo"],
       commit: (process.env.VERCEL_GIT_COMMIT_SHA || "local").slice(0, 7),
     });
   if (pathname === "/frases") return enviar(res, 200, todas());
   if (pathname === "/frases/random") return enviar(res, 200, azar());
   if (pathname === "/frases/hoy") return enviar(res, 200, hoy());
-  if (pathname === "/frases/fondo") {
-    const frase = elegir(Object.fromEntries(searchParams));
+  // Fondo: /frases/fondo (al azar), /frases/fondo?id=N, /frases/fondo/N o /frases/N/fondo
+  const f = pathname.match(/^\/frases\/(?:fondo|(\d+)\/fondo)(?:\/(\d+))?$/);
+  if (f) {
+    const id = f[1] ?? f[2] ?? searchParams.get("id") ?? undefined;
+    const frase = elegir({ ...Object.fromEntries(searchParams), ...(id !== undefined && { id }) });
     if (!frase) return enviar(res, 404, { error: "Frase no encontrada" });
     try {
       return enviarPng(res, await fondo(frase));
