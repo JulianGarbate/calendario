@@ -11,7 +11,7 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname === "/")
     return enviar(res, 200, {
-      rutas: ["/frases", "/frases/random", "/frases/hoy", "/frases/:id", "/frases/fondo", "/frases/:id/fondo"],
+      rutas: ["/frases", "/frases/random", "/frases/hoy", "/frases/:id", "/frases/fondo", "/frases/:id/fondo", "/frases/fondo?n=N"],
       commit: (process.env.VERCEL_GIT_COMMIT_SHA || "local").slice(0, 7),
     });
   if (pathname === "/frases") return enviar(res, 200, todas());

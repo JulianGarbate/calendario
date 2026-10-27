@@ -15,6 +15,7 @@ node server.js            # puerto 3000, o PORT=8080 node server.js
 | `GET /frases/hoy` | Una frase distinta por día (UTC), estable durante el día |
 | `GET /frases/:id` | Una frase por id, o 404 |
 | `GET /frases/fondo` | PNG 1170x2532 (iPhone 13) con una frase al azar. `?hoy=1` usa la del día |
+| `GET /frases/fondo?n=N` | PNG con la frase en la posición `N` de un orden fijo y mezclado: `n=1, 2, 3…` recorre las 100 sin repetir y vuelve a empezar en la 101 |
 | `GET /frases/:id/fondo` | PNG con la frase `id` (también `/frases/fondo/:id` o `/frases/fondo?id=N`); 404 si no existe |
 
 Cada frase: `{ "id": 1, "texto": "...", "autor": "..." }`.
