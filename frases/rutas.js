@@ -15,10 +15,13 @@ const enviar = (res, status, body) => {
   res.end(JSON.stringify(body));
 };
 
-// Orden fijo y mezclado de todas las frases (mismo orden en cada pedido): la posición n recorre
+// Orden fijo y mezclado de las frases (mismo orden en cada pedido): la posición n recorre
 // las frases de a una sin repetir hasta completarlas y después vuelve a empezar.
+// Solo se mezclan las primeras 100; las que se agreguen después van al final, en orden de id,
+// para que agregar frases no cambie el orden por el que ya va un contador.
+const MEZCLADAS = 100;
 const mezclado = (() => {
-  const orden = [...frases];
+  const orden = frases.slice(0, MEZCLADAS);
   let semilla = 20261027;
   const azarFijo = () => {
     semilla = (semilla + 0x6d2b79f5) | 0;
@@ -30,7 +33,7 @@ const mezclado = (() => {
     const j = Math.floor(azarFijo() * (i + 1));
     [orden[i], orden[j]] = [orden[j], orden[i]];
   }
-  return orden;
+  return [...orden, ...frases.slice(MEZCLADAS)];
 })();
 const enPosicion = (n) => (/^[1-9]\d*$/.test(n) ? mezclado[(Number(n) - 1) % mezclado.length] : undefined);
 
