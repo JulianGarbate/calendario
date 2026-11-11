@@ -105,5 +105,10 @@
   {"id": 104, "texto": "No esperes el momento perfecto, busca un momento y hazlo perfecto.", "autor": "Anónimo"},
   {"id": 105, "texto": "No dejes que el pasar de la vida defina tu destino.", "autor": "Anónimo"},
   {"id": 106, "texto": "No dejes de soñar por una pesadilla.", "autor": "Anónimo"},
-  {"id": 107, "texto": "Si quieres ser amado, ama.", "autor": "Séneca"}
+  {"id": 107, "texto": "Si quieres ser amado, ama.", "autor": "Séneca"},
+  {"id": 108, "texto": "La gota excava la piedra, no por su fuerza, sino por su constancia.", "autor": "Ovidio"},
+  {"id": 109, "texto": "Las grandes obras no se realizan con fuerza, sino con perseverancia.", "autor": "Samuel Johnson"},
+  {"id": 110, "texto": "El dolor es inevitable. El sufrimiento es opcional.", "autor": "Haruki Murakami"},
+  {"id": 111, "texto": "La cueva en la que temes entrar guarda el tesoro que buscas.", "autor": "Joseph Campbell"},
+  {"id": 112, "texto": "Siempre es ahora.", "autor": "Eckhart Tolle"}
 ]
