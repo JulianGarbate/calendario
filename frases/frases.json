@@ -100,5 +100,9 @@
   {"id": 99, "texto": "A veces viene bien perder para saber lo difícil que es ganar y lo bonito que es.", "autor": "Luis Enrique"},
   {"id": 100, "texto": "Si tengo que perder, pierdo, pero jugando al fútbol.", "autor": "Luis Enrique"},
   {"id": 101, "texto": "Me pregunto si las estrellas se iluminan con el fin de que… alguien las encuentre.", "autor": "El principito"},
-  {"id": 102, "texto": "Todos somos… esclavos de algo.", "autor": "Kenny Ackerman"}
+  {"id": 102, "texto": "Todos somos… esclavos de algo.", "autor": "Kenny Ackerman"},
+  {"id": 103, "texto": "No puedes odiar a todas las rosas porque una sola te pinchó.", "autor": "Antoine de Saint-Exupéry"},
+  {"id": 104, "texto": "No esperes el momento perfecto, busca un momento y hazlo perfecto.", "autor": "Anónimo"},
+  {"id": 105, "texto": "No dejes que el pasar de la vida defina tu destino.", "autor": "Anónimo"},
+  {"id": 106, "texto": "No dejes de soñar por una pesadilla.", "autor": "Anónimo"}
 ]
