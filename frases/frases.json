@@ -110,5 +110,12 @@
   {"id": 109, "texto": "Las grandes obras no se realizan con fuerza, sino con perseverancia.", "autor": "Samuel Johnson"},
   {"id": 110, "texto": "El dolor es inevitable. El sufrimiento es opcional.", "autor": "Haruki Murakami"},
   {"id": 111, "texto": "La cueva en la que temes entrar guarda el tesoro que buscas.", "autor": "Joseph Campbell"},
-  {"id": 112, "texto": "Siempre es ahora.", "autor": "Eckhart Tolle"}
+  {"id": 112, "texto": "Siempre es ahora.", "autor": "Eckhart Tolle"},
+  {"id": 113, "texto": "El mayor error que un hombre puede cometer es tener miedo de cometer uno.", "autor": "Elbert Hubbard"},
+  {"id": 114, "texto": "Quien se contenta con lo que tiene es rico.", "autor": "Lao Tsé"},
+  {"id": 115, "texto": "Cuando dejo ir lo que soy, me convierto en lo que podría ser.", "autor": "Lao Tsé"},
+  {"id": 116, "texto": "Ayer era inteligente, así que quería cambiar el mundo. Hoy soy sabio, así que me estoy cambiando a mí mismo.", "autor": "Rumi"},
+  {"id": 117, "texto": "La disciplina es libertad.", "autor": "Jocko Willink"},
+  {"id": 118, "texto": "Ningún hombre es libre si no es dueño de sí mismo.", "autor": "Epicteto"},
+  {"id": 119, "texto": "Delante de la excelencia, los dioses pusieron el sudor.", "autor": "Hesíodo"}
 ]
