@@ -4,7 +4,6 @@ const ALTO = 2532;
 const COL = 950; // ancho útil del texto
 const ALTO_TEXTO = 560; // alto máximo para la frase (el resto es la línea y el autor)
 const BASE = 1450; // y donde termina el bloque: arriba de las notificaciones y bajo el reloj
-const MARCA_Y = 1250; // y donde empieza el trébol de fondo: debajo de la frase, para no cruzarla
 
 const fuentes = () => {
   const dejavu = require("./fonts/dejavu");
@@ -37,14 +36,12 @@ const tamanoFrase = (texto) => {
 const div = (style, children) => ({ type: "div", props: { style, children } });
 const img = (src, style) => ({ type: "img", props: { src, style } });
 
-// Trébol como imagen SVG: contorno grande y tenue de fondo, y uno dorado chico junto al autor
+// Trébol dorado chico junto al autor, como imagen SVG
 const trebolSvg = (cuerpo) => {
   const { ANCHO: w, ALTO: h } = require("./trebol");
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 ${w + 20} ${h + 20}">${cuerpo}</svg>`;
   return "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64");
 };
-const trebolContorno = () =>
-  trebolSvg(`<path d="${require("./trebol").D}" fill="none" stroke="#c9a96a" stroke-width="9" stroke-linejoin="round" fill-rule="evenodd"/>`);
 const trebolDorado = () => trebolSvg(`<path d="${require("./trebol").D}" fill="#c9a96a" fill-rule="evenodd"/>`);
 
 const diseno = ({ texto, autor }) =>
@@ -56,7 +53,6 @@ const diseno = ({ texto, autor }) =>
       background: "radial-gradient(circle at 50% 0%, #252932 0%, #0c0d10 72%)",
     },
     [
-      img(trebolContorno(), { position: "absolute", left: 540, top: MARCA_Y, width: 840, height: 807, opacity: 0.2, transform: "rotate(10deg)" }),
       div(
         {
           position: "absolute",
