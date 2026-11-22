@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { SESSION_COOKIE, verifySession } from "@/lib/session";
 
 // /api/cron/sync se protege solo con CRON_SECRET (no tiene cookie de sesión)
-const PUBLIC = ["/login", "/api/auth/login", "/api/cron/sync", "/api/tefilin"];
+const PUBLIC = ["/login", "/api/auth/login", "/api/cron/sync"];
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
